@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Vertex Linux</title>
+  <meta name="description" content="Vertex Linux is a Linux distribution in development, focused on reliability, simplicity, user control and purposeful independence.">
+
+  <style>
+    :root {
+      --bg: #090a0f;
+      --surface: #101219;
+      --surface-2: #151822;
+      --border: #252936;
+      --text: #f5f7fb;
+      --muted: #9ba3b4;
+      --accent: #8c92ff;
+      --accent-soft: rgba(140, 146, 255, 0.12);
+      --green: #73e2a7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% -10%, #1d2035 0%, transparent 38rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      background: rgba(9,10,15,.78);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      min-height: 82vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 0;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 12px;
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted);
+      background: rgba(255,255,255,.025);
+      font-size: .85rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px rgba(115,226,167,.5);
+    }
+
+    h1 {
+      max-width: 950px;
+      margin: 0;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      line-height: .94;
+      letter-spacing: -.065em;
+    }
+
+    .accent {
+      background: linear-gradient(90deg, #fff, #a2a7ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      max-width: 720px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 35px;
+    }
+
+    .button {
+      padding: 12px 19px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-weight: 650;
+      transition: .2s;
+    }
+
+    .button.primary {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    .button.secondary {
+      background: rgba(255,255,255,.025);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 105px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+
+    .label {
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      max-width: 850px;
+      margin: 10px 0 20px;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -.045em;
+    }
+
+    .lead {
+      max-width: 790px;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .card {
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+    }
+
+    .card-number {
+      color: var(--accent);
+      font-family: monospace;
+      font-size: .85rem;
+    }
+
+    .card h3 {
+      margin: 16px 0 7px;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .evolution {
+      max-width: 700px;
+      margin-top: 45px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .evolution-box {
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      font-family: monospace;
+    }
+
+    .arrow {
+      padding-left: 28px;
+      color: var(--muted);
+    }
+
+    .roadmap {
+      margin-top: 50px;
+      border-left: 1px solid var(--border);
+    }
+
+    .roadmap-item {
+      position: relative;
+      padding: 0 0 42px 32px;
+    }
+
+    .roadmap-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .roadmap-item::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      left: -6px;
+      top: 7px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+
+    .roadmap-item.current::before {
+      background: var(--green);
+      border-color: var(--green);
+      box-shadow: 0 0 12px rgba(115,226,167,.45);
+    }
+
+    .roadmap-item h3 {
+      margin: 0 0 5px;
+    }
+
+    .roadmap-item p {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .terminal {
+      margin-top: 45px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #06070a;
+      box-shadow: 0 30px 80px rgba(0,0,0,.3);
+    }
+
+    .terminal-header {
+      display: flex;
+      gap: 7px;
+      padding: 13px 15px;
+      background: #11131a;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3d414c;
+    }
+
+    pre {
+      margin: 0;
+      padding: 27px;
+      overflow-x: auto;
+      color: #dce2ef;
+      font-size: .93rem;
+      line-height: 1.8;
+    }
+
+    .note {
+      margin-top: 30px;
+      padding: 22px 24px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--accent-soft);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 50px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+      color: var(--muted);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 800px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 90px 0;
+      }
+
+      section {
+        padding: 75px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="brand" href="#">Vertex<span>Linux</span></a>
+
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#principles">Principles</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#status">Status</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<header class="hero">
+  <div class="container">
+
+    <div class="status">
+      <span class="status-dot"></span>
+      In early development
+    </div>
+
+    <h1>
+      Building Linux<br>
+      <span class="accent">from the foundation up.</span>
+    </h1>
+
+    <p class="hero-description">
+      Vertex Linux is a new Linux distribution being built to become a practical,
+      reliable and daily-drivable operating system while remaining understandable,
+      customizable and under the user's control.
+    </p>
+
+    <div class="buttons">
+      <a class="button primary" href="#about">Discover Vertex</a>
+      <a class="button secondary" href="#roadmap">View the roadmap</a>
+    </div>
+
+  </div>
+</header>
+
+
+<section id="about">
+  <div class="container">
+
+    <div class="label">The Project</div>
+
+    <h2>
+      More than another Linux distribution with different branding.
+    </h2>
+
+    <p class="lead">
+      Vertex Linux is being developed with a simple long-term goal: create a
+      genuinely useful Linux distribution rather than simply repackaging an
+      existing system.
+    </p>
+
+    <p class="lead">
+      Vertex will initially use Arch Linux as its foundation. This gives the
+      project access to mature packaging infrastructure, a huge software
+      ecosystem and a minimal base while Vertex itself is still young.
+    </p>
+
+    <p class="lead">
+      That foundation is a starting point, not the final destination. Vertex
+      will gradually introduce its own repositories, packages, installer and
+      system tooling as the project matures.
+    </p>
+
+    <div class="evolution">
+      <div class="evolution-box">Arch Linux foundation</div>
+      <div class="arrow">↓</div>
+      <div class="evolution-box">Vertex ISO + configuration</div>
+      <div class="arrow">↓</div>
+      <div class="evolution-box">Vertex packages + repositories</div>
+      <div class="arrow">↓</div>
+      <div class="evolution-box">Vertex system tooling</div>
+      <div class="arrow">↓</div>
+      <div class="evolution-box">Increasingly independent Vertex Linux</div>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="principles">
+  <div class="container">
+
+    <div class="label">Design Principles</div>
+
+    <h2>Keep what works. Build what matters.</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-number">01</div>
+        <h3>Usable first</h3>
+        <p>
+          Vertex does not need to become independent overnight. A reliable
+          operating system matters more than replacing software simply for the
+          sake of replacing it.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-number">02</div>
+        <h3>User control</h3>
+        <p>
+          Vertex should remain understandable and configurable. The operating
+          system should work for its user rather than hiding the system from them.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-number">03</div>
+        <h3>Reliability</h3>
+        <p>
+          The project aims to eventually add additional testing, recovery
+          mechanisms and update safeguards around its rolling foundation.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-number">04</div>
+        <h3>Minimal when wanted</h3>
+        <p>
+          A TTY-only installation will remain a valid way to use Vertex.
+          Graphical environments should be choices rather than requirements.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-number">05</div>
+        <h3>Incremental development</h3>
+        <p>
+          Vertex will be built one working layer at a time, with development
+          tracked in Git and known-good milestones preserved.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-number">06</div>
+        <h3>Purposeful independence</h3>
+        <p>
+          Vertex-specific replacements should exist because they improve the
+          system, not because independence makes for a better marketing claim.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section id="roadmap">
+  <div class="container">
+
+    <div class="label">Roadmap</div>
+
+    <h2>Start with a terminal. Build from there.</h2>
+
+    <p class="lead">
+      Vertex has ambitious long-term ideas, but none of them matter without a
+      dependable base system. Development therefore begins with the smallest
+      genuinely useful milestone.
+    </p>
+
+    <div class="roadmap">
+
+      <div class="roadmap-item current">
+        <h3>0.0.1 - Bootable Foundation</h3>
+        <p>
+          Build a Vertex installation ISO capable of installing onto a blank
+          machine and booting independently into a working TTY with networking
+          and package management.
+        </p>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>Vertex Installer</h3>
+        <p>
+          Develop a dedicated terminal-based installer capable of performing a
+          normal installation while always providing access to an emergency shell.
+        </p>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>Vertex Repositories</h3>
+        <p>
+          Introduce repositories containing Vertex packages, configuration,
+          system tooling and other project-maintained components.
+        </p>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>Desktop</h3>
+        <p>
+          Add optional lightweight graphical environments, with XFCE and Sway
+          among the environments currently being considered.
+        </p>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>System Tooling</h3>
+        <p>
+          Develop Vertex-native tools where they can make installation,
+          configuration, updates and system management simpler or safer.
+        </p>
+      </div>
+
+      <div class="roadmap-item">
+        <h3>Greater Independence</h3>
+        <p>
+          Gradually replace selected upstream components when Vertex can provide
+          an implementation with a genuine technical benefit.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section id="status">
+  <div class="container">
+
+    <div class="label">Current Milestone</div>
+
+    <h2>Vertex Linux 0.0.1</h2>
+
+    <p class="lead">
+      Vertex Linux is currently in very early development and is not yet
+      available as a stable operating system for general use.
+    </p>
+
+    <p class="lead">
+      Right now, the objective is intentionally simple: install Vertex onto a
+      blank virtual machine, remove the installation media and boot the installed
+      system successfully.
+    </p>
+
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+      </div>
+
+<pre>Vertex Linux 0.0.1
+
+vertex login: wesley
+Password:
+
+[wesley@vertex ~]$ _</pre>
+
+    </div>
+
+    <div class="note">
+      <strong>Definition of done for 0.0.1</strong>
+      <p>
+        Vertex installs onto a blank VM, boots from its installed disk without
+        the ISO attached, provides a working TTY login, connects to the network
+        and can install and update packages.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<section>
+  <div class="container">
+
+    <div class="label">Looking Ahead</div>
+
+    <h2>A distro that earns its own identity.</h2>
+
+    <p class="lead">
+      Future ideas include curated Vertex repositories, safer updates and
+      snapshots, lightweight desktop options and potentially a simple
+      declarative configuration system for packages, services and other system
+      settings.
+    </p>
+
+    <p class="lead">
+      These are long-term directions rather than promises for the first release.
+      Vertex will grow incrementally, keeping a working system at the centre of
+      development.
+    </p>
+
+  </div>
+</section>
+
+</main>
+
+
+<footer>
+  <div class="container footer">
+
+    <div>
+      <strong>Vertex Linux</strong><br>
+      Building from the foundation up.
+    </div>
+
+    <div>
+      vertexlinux.org
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>
